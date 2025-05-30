@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express Entry Immigration Analysis Dashboard 2025</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>🇨🇦 Express Entry Immigration Analysis Dashboard 2025</h1>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">244,282</span>
+                        <span class="stat-label">Total Candidates</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">34,440</span>
+                        <span class="stat-label">ITAs Issued (2025)</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value status--warning">8.4%</span>
+                        <span class="stat-label">Have 500+ CRS</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-tab="pool-analysis">Current Pool Analysis</button>
+            <button class="tab-btn" data-tab="draw-trends">Draw Trends 2025</button>
+            <button class="tab-btn" data-tab="chances-calculator">Chances Calculator</button>
+            <button class="tab-btn" data-tab="score-projections">Score Projections</button>
+            <button class="tab-btn" data-tab="backlog-analysis">Backlog Analysis</button>
+        </nav>
+
+        <main class="dashboard-content">
+            <!-- Current Pool Analysis Tab -->
+            <div class="tab-content active" id="pool-analysis">
+                <div class="section-header">
+                    <h2>Current Pool Analysis</h2>
+                    <p>Understanding your competition in the Express Entry pool</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Pool Overview</h3>
+                            <div class="metric">
+                                <span class="metric-value">244,282</span>
+                                <span class="metric-label">Total Candidates</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value text-warning">20,598</span>
+                                <span class="metric-label">Candidates with 500+ CRS</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Competition Level</h3>
+                            <div class="competition-indicator">
+                                <div class="status status--error">Very High</div>
+                                <p>Only 8.4% of candidates have competitive scores (500+)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>CRS Score Distribution</h3>
+                            <img src="https://pplx-res.cloudinary.com/image/upload/v1748632925/pplx_code_interpreter/f6e4bf60_pimcc9.jpg" alt="Express Entry Pool Distribution by CRS Score Range" class="chart-image">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pool-table-container">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Detailed Pool Distribution</h3>
+                            <div class="table-responsive">
+                                <table class="pool-table">
+                                    <thead>
+                                        <tr>
+                                            <th>CRS Score Range</th>
+                                            <th>Candidates</th>
+                                            <th>Cumulative</th>
+                                            <th>Competition Level</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="pool-table-body">
+                                        <!-- Populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Draw Trends Tab -->
+            <div class="tab-content" id="draw-trends">
+                <div class="section-header">
+                    <h2>Draw Trends 2025</h2>
+                    <p>Complete history of Express Entry draws this year</p>
+                </div>
+
+                <div class="draws-summary">
+                    <div class="card">
+                        <div class="card__body">
+                            <div class="draws-stats-grid">
+                                <div class="draw-stat">
+                                    <span class="stat-value">17</span>
+                                    <span class="stat-label">Total Draws</span>
+                                </div>
+                                <div class="draw-stat">
+                                    <span class="stat-value">34,440</span>
+                                    <span class="stat-label">Total ITAs</span>
+                                </div>
+                                <div class="draw-stat">
+                                    <span class="stat-value">537</span>
+                                    <span class="stat-label">Avg CEC Score</span>
+                                </div>
+                                <div class="draw-stat">
+                                    <span class="stat-value">406</span>
+                                    <span class="stat-label">Avg French Score</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="draws-timeline">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>2025 Draw Timeline</h3>
+                            <div class="timeline-container" id="draws-timeline">
+                                <!-- Populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Chances Calculator Tab -->
+            <div class="tab-content" id="chances-calculator">
+                <div class="section-header">
+                    <h2>🎯 Enhanced Chances Calculator</h2>
+                    <p>Get personalized insights into your Express Entry prospects</p>
+                </div>
+
+                <div class="calculator-container">
+                    <div class="calculator-inputs">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Your Profile</h3>
+                                <div class="form-group">
+                                    <label class="form-label">Your Current CRS Score</label>
+                                    <input type="number" id="crs-score" class="form-control" placeholder="Enter your CRS score" min="0" max="1200">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Profile Type</label>
+                                    <select id="profile-type" class="form-control">
+                                        <option value="general">General (No specific eligibility)</option>
+                                        <option value="cec">CEC Eligible (Canadian Experience)</option>
+                                        <option value="french">French Speaker</option>
+                                        <option value="healthcare">Healthcare Worker</option>
+                                        <option value="education">Education Worker</option>
+                                        <option value="pnp">PNP Nomination Available</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Primary Language</label>
+                                    <select id="language" class="form-control">
+                                        <option value="english">English</option>
+                                        <option value="french">French</option>
+                                        <option value="both">Both (Bilingual)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Years of Experience</label>
+                                    <select id="experience" class="form-control">
+                                        <option value="0-1">0-1 years</option>
+                                        <option value="2-3">2-3 years</option>
+                                        <option value="4-5">4-5 years</option>
+                                        <option value="6+">6+ years</option>
+                                    </select>
+                                </div>
+
+                                <button class="btn btn--primary btn--full-width" onclick="calculateChances()">
+                                    Calculate My Chances
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Your Results</h3>
+                                <div id="results-container">
+                                    <p class="text-muted">Enter your details to see personalized analysis</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="probability-heatmap">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Invitation Probability Matrix</h3>
+                            <img src="https://pplx-res.cloudinary.com/image/upload/v1748633022/pplx_code_interpreter/ed8cebc8_oekhjm.jpg" alt="Invitation Probability by CRS Score and Draw Type" class="chart-image">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="improvement-tips">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>💡 Score Improvement Tips</h3>
+                            <div class="tips-grid" id="improvement-tips">
+                                <!-- Populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Score Projections Tab -->
+            <div class="tab-content" id="score-projections">
+                <div class="section-header">
+                    <h2>Score Projections</h2>
+                    <p>Projected CRS score trends for the remainder of 2025</p>
+                </div>
+
+                <div class="projections-chart">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Projected CRS Score Trends (June-December 2025)</h3>
+                            <img src="https://pplx-res.cloudinary.com/image/upload/v1748633095/pplx_code_interpreter/8e23384f_ycrgwt.jpg" alt="Projected CRS Score Trends" class="chart-image">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="projections-details">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Key Projections</h3>
+                            <div class="projections-grid">
+                                <div class="projection-item">
+                                    <h4>CEC Draws</h4>
+                                    <p><strong>Current:</strong> 537 average</p>
+                                    <p><strong>Dec 2025:</strong> 480-510 projected</p>
+                                    <div class="status status--success">Declining trend</div>
+                                </div>
+                                <div class="projection-item">
+                                    <h4>French Draws</h4>
+                                    <p><strong>Current:</strong> 406 average</p>
+                                    <p><strong>Dec 2025:</strong> 350-380 projected</p>
+                                    <div class="status status--success">Strong opportunity</div>
+                                </div>
+                                <div class="projection-item">
+                                    <h4>PNP Draws</h4>
+                                    <p><strong>Current:</strong> 738 average</p>
+                                    <p><strong>Dec 2025:</strong> 650-700 projected</p>
+                                    <div class="status status--warning">High scores needed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backlog Analysis Tab -->
+            <div class="tab-content" id="backlog-analysis">
+                <div class="section-header">
+                    <h2>Backlog Analysis</h2>
+                    <p>Processing capacity and immigration targets analysis</p>
+                </div>
+
+                <div class="backlog-stats">
+                    <div class="stats-grid">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Current Backlog</h3>
+                                <div class="metric">
+                                    <span class="metric-value">880,800</span>
+                                    <span class="metric-label">PR Applications</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Processing Capacity</h3>
+                                <div class="metric">
+                                    <span class="metric-value">74,000</span>
+                                    <span class="metric-label">Applications/Month</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>2025 Target</h3>
+                                <div class="metric">
+                                    <span class="metric-value">395,000</span>
+                                    <span class="metric-label">New Immigrants</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="backlog-chart">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Backlog Reduction Trends</h3>
+                            <img src="https://pplx-res.cloudinary.com/image/upload/v1748633203/pplx_code_interpreter/ca5e3fa9_dbm0xv.jpg" alt="Immigration Backlog Reduction and Processing Capacity" class="chart-image">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="targets-timeline">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Immigration Targets Timeline</h3>
+                            <div class="timeline-targets">
+                                <div class="target-year">
+                                    <span class="year">2025</span>
+                                    <span class="target">395,000</span>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 35%"></div>
+                                    </div>
+                                </div>
+                                <div class="target-year">
+                                    <span class="year">2026</span>
+                                    <span class="target">380,000</span>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="target-year">
+                                    <span class="year">2027</span>
+                                    <span class="target">365,000</span>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Processing Timeline Analysis</h3>
+                        <div class="projections-grid">
+                            <div class="projection-item">
+                                <h4>Current Situation</h4>
+                                <p><strong>Backlog:</strong> 880,800 applications</p>
+                                <p><strong>Monthly Processing:</strong> 74,000 apps</p>
+                                <div class="status status--info">11.9 months to clear</div>
+                            </div>
+                            <div class="projection-item">
+                                <h4>Express Entry Share</h4>
+                                <p><strong>2025 Target:</strong> 124,590 ITAs</p>
+                                <p><strong>Current Progress:</strong> 34,440 ITAs</p>
+                                <div class="status status--warning">28% completed</div>
+                            </div>
+                            <div class="projection-item">
+                                <h4>Future Outlook</h4>
+                                <p><strong>Processing:</strong> Improving capacity</p>
+                                <p><strong>Timeline:</strong> Meeting 2025+ targets</p>
+                                <div class="status status--success">On track</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <p><strong>Disclaimer:</strong> This dashboard provides estimates based on historical data and current trends. Actual results may vary. Always consult official government sources for the most up-to-date information.</p>
+                <div class="footer-links">
+                    <a href="https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry.html" target="_blank">Official Express Entry</a>
+                    <a href="https://www.cic.gc.ca/english/immigrate/skilled/crs-tool.asp" target="_blank">CRS Calculator</a>
+                    <a href="https://www.canada.ca/en/immigration-refugees-citizenship/corporate/publications-manuals/operational-bulletins-manuals/permanent-residence/economic-classes/experience/processing.html" target="_blank">Processing Times</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
