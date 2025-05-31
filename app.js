@@ -137,26 +137,28 @@ function analyzeChances(crsScore, profileType, language, experience) {
 function calculateOverallChances(crsScore, profileType) {
     let baseChance = 0;
     
-    if (crsScore >= 600) baseChance = 100;
-    else if (crsScore >= 550) baseChance = 95;
-    else if (crsScore >= 500) baseChance = 90;
-    else if (crsScore >= 470) baseChance = 85;
-    else if (crsScore >= 450) baseChance = 75;
-    else if (crsScore >= 400) baseChance = 50;
-    else if (crsScore >= 350) baseChance = 5;
-    else baseChance = 1;
+    // Adjusted base chances for more optimism
+    if (crsScore >= 550) baseChance = 100; // Previously 600
+    else if (crsScore >= 500) baseChance = 95; // Previously 550
+    else if (crsScore >= 480) baseChance = 90; // Previously 500
+    else if (crsScore >= 460) baseChance = 85; // Previously 470
+    else if (crsScore >= 440) baseChance = 75; // Previously 450
+    else if (crsScore >= 400) baseChance = 60; // Previously 50
+    else if (crsScore >= 370) baseChance = 40; // Previously 350 -> 5
+    else if (crsScore >= 350) baseChance = 20; // New tier
+    else baseChance = 5; // Previously 1
     
-    // Profile type adjustments
+    // Slightly more generous profile type adjustments
     const adjustments = {
-        'cec': 1.2,
-        'french': 1.4,
-        'pnp': 1.8,
-        'healthcare': 1.3,
-        'education': 1.1,
+        'cec': 1.15,        // Previously 1.2
+        'french': 1.3,      // Previously 1.4 (kept high as it's impactful)
+        'pnp': 1.6,         // Previously 1.8 (PNP is very strong, but adjusting base makes this reasonable)
+        'healthcare': 1.25, // Previously 1.3
+        'education': 1.1,   // Kept same
         'general': 1.0
     };
     
-    return Math.min(95, Math.round(baseChance * adjustments[profileType]));
+    return Math.min(100, Math.round(baseChance * adjustments[profileType])); // Max 100%
 }
 
 function calculateDrawTypeChances(crsScore, profileType, language) {
@@ -168,48 +170,48 @@ function calculateDrawTypeChances(crsScore, profileType, language) {
         Education: 0
     };
     
-    // CEC chances
+    // CEC chances - more optimistic
     if (profileType === 'cec' || profileType === 'general') {
-        if (crsScore >= 550) drawTypes.CEC = 90;
-        else if (crsScore >= 530) drawTypes.CEC = 75;
-        else if (crsScore >= 510) drawTypes.CEC = 55;
-        else if (crsScore >= 490) drawTypes.CEC = 35;
-        else if (crsScore >= 470) drawTypes.CEC = 15;
-        else drawTypes.CEC = 5;
+        if (crsScore >= 520) drawTypes.CEC = 90;       // Prev 550
+        else if (crsScore >= 500) drawTypes.CEC = 80;  // Prev 530
+        else if (crsScore >= 480) drawTypes.CEC = 65;  // Prev 510
+        else if (crsScore >= 460) drawTypes.CEC = 45;  // Prev 490
+        else if (crsScore >= 440) drawTypes.CEC = 25;  // Prev 470
+        else drawTypes.CEC = 10;                       // Prev 5
     }
     
-    // French chances
+    // French chances - more optimistic
     if (language === 'french' || language === 'both') {
-        if (crsScore >= 450) drawTypes.French = 95;
-        else if (crsScore >= 420) drawTypes.French = 85;
-        else if (crsScore >= 400) drawTypes.French = 75;
-        else if (crsScore >= 380) drawTypes.French = 60;
-        else if (crsScore >= 350) drawTypes.French = 40;
-        else drawTypes.French = 20;
+        if (crsScore >= 430) drawTypes.French = 95;     // Prev 450
+        else if (crsScore >= 400) drawTypes.French = 88; // Prev 420
+        else if (crsScore >= 380) drawTypes.French = 78; // Prev 400
+        else if (crsScore >= 360) drawTypes.French = 65; // Prev 380
+        else if (crsScore >= 340) drawTypes.French = 45; // Prev 350
+        else drawTypes.French = 25;                      // Prev 20
     }
     
-    // PNP chances
+    // PNP chances - slightly adjusted (PNP is inherently high CRS)
     if (profileType === 'pnp') {
-        if (crsScore >= 700) drawTypes.PNP = 95;
-        else if (crsScore >= 650) drawTypes.PNP = 80;
-        else if (crsScore >= 600) drawTypes.PNP = 60;
-        else drawTypes.PNP = 30;
+        if (crsScore >= 680) drawTypes.PNP = 95;       // Prev 700
+        else if (crsScore >= 630) drawTypes.PNP = 85;  // Prev 650
+        else if (crsScore >= 580) drawTypes.PNP = 70;  // Prev 600
+        else drawTypes.PNP = 40;                       // Prev 30
     }
     
-    // Healthcare chances
+    // Healthcare chances - more optimistic
     if (profileType === 'healthcare') {
-        if (crsScore >= 520) drawTypes.Healthcare = 90;
-        else if (crsScore >= 500) drawTypes.Healthcare = 75;
-        else if (crsScore >= 480) drawTypes.Healthcare = 60;
-        else drawTypes.Healthcare = 40;
+        if (crsScore >= 500) drawTypes.Healthcare = 90; // Prev 520
+        else if (crsScore >= 480) drawTypes.Healthcare = 78; // Prev 500
+        else if (crsScore >= 460) drawTypes.Healthcare = 65; // Prev 480
+        else drawTypes.Healthcare = 45;                      // Prev 40
     }
     
-    // Education chances
+    // Education chances - more optimistic
     if (profileType === 'education') {
-        if (crsScore >= 490) drawTypes.Education = 85;
-        else if (crsScore >= 470) drawTypes.Education = 70;
-        else if (crsScore >= 450) drawTypes.Education = 55;
-        else drawTypes.Education = 35;
+        if (crsScore >= 470) drawTypes.Education = 85; // Prev 490
+        else if (crsScore >= 450) drawTypes.Education = 75; // Prev 470
+        else if (crsScore >= 430) drawTypes.Education = 60; // Prev 450
+        else drawTypes.Education = 40;                      // Prev 35
     }
     
     return drawTypes;
