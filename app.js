@@ -444,11 +444,6 @@ function generateImprovementTips() {
             description: 'Provincial nomination virtually guarantees invitation to apply'
         },
         {
-            title: 'Improve Age Factor',
-            points: '+12 CRS',
-            description: 'Apply between ages 20-29 for maximum age-related points'
-        },
-        {
             title: 'Arrange Employment',
             points: '+15 CRS',
             description: 'Having arranged employment in Canada provides additional points'
