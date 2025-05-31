@@ -137,12 +137,12 @@ function analyzeChances(crsScore, profileType, language, experience) {
 function calculateOverallChances(crsScore, profileType) {
     let baseChance = 0;
     
-    if (crsScore >= 600) baseChance = 95;
-    else if (crsScore >= 550) baseChance = 85;
-    else if (crsScore >= 500) baseChance = 70;
-    else if (crsScore >= 470) baseChance = 45;
-    else if (crsScore >= 450) baseChance = 25;
-    else if (crsScore >= 400) baseChance = 10;
+    if (crsScore >= 600) baseChance = 100;
+    else if (crsScore >= 550) baseChance = 95;
+    else if (crsScore >= 500) baseChance = 90;
+    else if (crsScore >= 470) baseChance = 85;
+    else if (crsScore >= 450) baseChance = 75;
+    else if (crsScore >= 400) baseChance = 50;
     else if (crsScore >= 350) baseChance = 5;
     else baseChance = 1;
     
